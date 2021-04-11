@@ -11,7 +11,7 @@ labels_path = '../src/labels/imagenet_classes.txt'
 ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
 # imgname = 'ILSVRC2012_val_00000001.JPEG'
 image_src = os.listdir(img_src_path)
-data_set_size = 100
+data_set_size = 50000
 
 model_1 = tf.keras.applications.MobileNetV2()
 # model_1.summary()
@@ -69,6 +69,26 @@ def top_one_precision(result):
 	precision = correct/data_set_size
 	return precision
 
+def top_five_precision(result):
+	correct = 0.0
+	for i in range(len(result)):
+		top_one_result = result[i][0][1].replace('_', ' ')
+		top_two_result = result[i][1][1].replace('_', ' ')
+		top_three_result = result[i][2][1].replace('_', ' ')
+		top_four_result = result[i][3][1].replace('_', ' ')
+		top_five_result = result[i][4][1].replace('_', ' ')
+		if (labels[top_one_result] == ground_truth[image_src[i]] or 
+		labels[top_two_result] == ground_truth[image_src[i]] or 
+		labels[top_three_result] == ground_truth[image_src[i]] or
+		labels[top_four_result] == ground_truth[image_src[i]] or
+		labels[top_five_result] == ground_truth[image_src[i]]):
+			correct += 1
+
+	precision = correct/data_set_size
+	return precision
+
 	
-precision_model_1 = top_one_precision(results_model_1)
-print('MobileNetV2 precision: {}'.format(precision_model_1))
+precision_model_1_top_1 = top_one_precision(results_model_1)
+precision_model_1_top_5 = top_five_precision(results_model_1)
+print('MobileNetV2 precision top 1: {}'.format(precision_model_1_top_1))
+print('MobileNetV2 precision top 5: {}'.format(precision_model_1_top_5))
