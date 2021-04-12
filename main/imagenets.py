@@ -9,6 +9,11 @@ import os
 from tensorflow import keras
 from tensorflow.keras.preprocessing import image
 
+# GPU config
+physical_devices = tf.config.experimental.list_physical_devices('GPU')
+print("Num GPUs Available: ", len(physical_devices))
+tf.config.experimental.set_memory_growth(physical_devices[0], True)
+
 img_src_path = '../src/imagenet2012_obj/'
 labels_path = '../src/labels/imagenet_classes.txt'
 ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
@@ -22,24 +27,23 @@ model_3 = tf.keras.applications.VGG16()
 # model_3.summary()
 
 # Preprocess for models in format 224x224, axis 0
-def prepare_img_model_224_224(img_src_path):
-	image_set = []
-	path = img_src_path
-	for i in range(data_set_size):
-		img = image.load_img(path + image_src[i], target_size=(224, 224))
-		img_array = image.img_to_array(img)
-		img_exp_dims = np.expand_dims(img_array, axis=0)
-		image_set.append(img_exp_dims)
-		print(i)
+# def prepare_img_model_224_224(img_src_path):
+# 	image_set = []
+# 	path = img_src_path
+# 	for i in range(data_set_size):
+# 		img = image.load_img(path + image_src[i], target_size=(224, 224))
+# 		img_array = image.img_to_array(img)
+# 		img_exp_dims = np.expand_dims(img_array, axis=0)
+# 		image_set.append(img_exp_dims)
 	
-	images = tf.convert_to_tensor(image_set)
-	images = tf.reshape(images, (data_set_size, 224, 224, 3))
-	return images
+# 	images = tf.convert_to_tensor(image_set)
+# 	images = tf.reshape(images, (data_set_size, 224, 224, 3))
+# 	return images
 
-# Preprocessed images 224x224, aixs 0
-preproc_images_224_224 = prepare_img_model_224_224(img_src_path)
+# # Preprocessed images 224x224, aixs 0
+# preproc_images_224_224 = prepare_img_model_224_224(img_src_path)
 
-# Preprocess and predict for MobileNetV2
+# # Preprocess and predict for MobileNetV2
 # preprocessed_img_model_1 = tf.keras.applications.mobilenet_v2.preprocess_input(preproc_images_224_224)
 # prediction_model_1 = model_1.predict(preprocessed_img_model_1)
 # results_model_1 = tf.keras.applications.mobilenet_v2.decode_predictions(prediction_model_1)
