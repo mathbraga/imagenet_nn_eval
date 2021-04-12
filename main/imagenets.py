@@ -1,7 +1,9 @@
 # MobileNetV2 = model_1
 # ResNet50 = model_2
+# VGG16 = model_3
 
 import tensorflow as tf
+import torch
 import numpy as np
 import os
 from tensorflow import keras
@@ -16,7 +18,8 @@ data_set_size = 50000
 
 model_1 = tf.keras.applications.MobileNetV2()
 model_2 = tf.keras.applications.ResNet50()
-# model_2.summary()
+model_3 = tf.keras.applications.VGG16()
+# model_3.summary()
 
 # Preprocess for models in format 224x224, axis 0
 def prepare_img_model_224_224(img_src_path):
@@ -46,6 +49,12 @@ preprocessed_img_model_2 = tf.keras.applications.resnet.preprocess_input(preproc
 prediction_model_2 = model_2.predict(preprocessed_img_model_2)
 results_model_2 = tf.keras.applications.resnet.decode_predictions(prediction_model_2)
 # print(results_model_2)
+
+# Preprocess and predict for VGG16
+preprocessed_img_model_3 = tf.keras.applications.vgg16.preprocess_input(preproc_images_224_224)
+prediction_model_3 = model_3.predict(preprocessed_img_model_3)
+results_model_3 = tf.keras.applications.vgg16.decode_predictions(prediction_model_3)
+# print(results_model_3)
 
 # Mount ground truth file
 ground_truth = {}
@@ -116,3 +125,9 @@ precision_model_2_top_1 = top_one_precision(results_model_2)
 precision_model_2_top_5 = top_five_precision(results_model_2)
 print('ResNet50 precision top 1: {}'.format(precision_model_2_top_1))
 print('ResNet50 precision top 5: {}'.format(precision_model_2_top_5))
+
+# Precisions VGG16
+precision_model_3_top_1 = top_one_precision(results_model_3)
+precision_model_3_top_5 = top_five_precision(results_model_3)
+print('VGG16 precision top 1: {}'.format(precision_model_3_top_1))
+print('VGG16 precision top 5: {}'.format(precision_model_3_top_5))
