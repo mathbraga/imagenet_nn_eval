@@ -1,4 +1,5 @@
 # MobileNetV2 = model_1
+# ResNet50 = model_2
 
 import tensorflow as tf
 import numpy as np
@@ -14,9 +15,11 @@ image_src = os.listdir(img_src_path)
 data_set_size = 50000
 
 model_1 = tf.keras.applications.MobileNetV2()
-# model_1.summary()
+model_2 = tf.keras.applications.ResNet50()
+# model_2.summary()
 
-def prepare_img_model_1(img_src_path):
+# Preprocess for models in format 224x224, axis 0
+def prepare_img_model_224_224(img_src_path):
 	image_set = []
 	path = img_src_path
 	for i in range(data_set_size):
@@ -27,12 +30,24 @@ def prepare_img_model_1(img_src_path):
 	
 	images = tf.convert_to_tensor(image_set)
 	images = tf.reshape(images, (data_set_size, 224, 224, 3))
-	return tf.keras.applications.mobilenet_v2.preprocess_input(images)
+	return images
 
-preprocessed_img_model_1 = prepare_img_model_1(img_src_path)
+# Preprocessed images 224x224, aixs 0
+preproc_images_224_224 = prepare_img_model_224_224(img_src_path)
+
+# Preprocess and predict for MobileNetV2
+preprocessed_img_model_1 = tf.keras.applications.mobilenet_v2.preprocess_input(preproc_images_224_224)
 prediction_model_1 = model_1.predict(preprocessed_img_model_1)
 results_model_1 = tf.keras.applications.mobilenet_v2.decode_predictions(prediction_model_1)
+# print(results_model_1)
 
+# Preprocess and predict for ResNet50
+preprocessed_img_model_2 = tf.keras.applications.resnet.preprocess_input(preproc_images_224_224)
+prediction_model_2 = model_2.predict(preprocessed_img_model_2)
+results_model_2 = tf.keras.applications.resnet.decode_predictions(prediction_model_2)
+# print(results_model_2)
+
+# Mount ground truth file
 ground_truth = {}
 def mount_ground_truth(file):
 	file_variable = open(file)
@@ -46,6 +61,7 @@ def mount_ground_truth(file):
 		# print(filename, ' ' , label)
 		ground_truth[filename] = label
 
+# Mount labels file
 labels = {}
 def mount_labels(file):
 	i = 0
@@ -59,6 +75,7 @@ def mount_labels(file):
 mount_labels(labels_path)
 mount_ground_truth(ground_truth_path)
 
+# Function that returns top 1 precision
 def top_one_precision(result):
 	correct = 0.0
 	for i in range(len(result)):
@@ -69,6 +86,7 @@ def top_one_precision(result):
 	precision = correct/data_set_size
 	return precision
 
+# Function that returns top 5 precision
 def top_five_precision(result):
 	correct = 0.0
 	for i in range(len(result)):
@@ -87,8 +105,14 @@ def top_five_precision(result):
 	precision = correct/data_set_size
 	return precision
 
-	
+# Precisions MobileNetV2
 precision_model_1_top_1 = top_one_precision(results_model_1)
 precision_model_1_top_5 = top_five_precision(results_model_1)
 print('MobileNetV2 precision top 1: {}'.format(precision_model_1_top_1))
 print('MobileNetV2 precision top 5: {}'.format(precision_model_1_top_5))
+
+# Precisions ResNet50
+precision_model_2_top_1 = top_one_precision(results_model_2)
+precision_model_2_top_5 = top_five_precision(results_model_2)
+print('ResNet50 precision top 1: {}'.format(precision_model_2_top_1))
+print('ResNet50 precision top 5: {}'.format(precision_model_2_top_5))
