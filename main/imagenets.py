@@ -3,7 +3,7 @@
 # VGG16 = model_3
 
 import tensorflow as tf
-import torch
+# import torch
 import numpy as np
 import os
 from tensorflow import keras
