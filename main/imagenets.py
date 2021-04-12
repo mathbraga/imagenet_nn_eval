@@ -2,81 +2,38 @@
 # ResNet50 = model_2
 # VGG16 = model_3
 
-import tensorflow as tf
-# import torch
+import torch
+from PIL import Image
+from torchvision import transforms
 import numpy as np
 import os
-from tensorflow import keras
-from tensorflow.keras.preprocessing import image
-
-# GPU config
-# physical_devices = tf.config.experimental.list_physical_devices('GPU')
-# print("Num GPUs Available: ", len(physical_devices))
-# tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 img_src_path = '../src/imagenet2012_obj/'
 labels_path = '../src/labels/imagenet_classes.txt'
 ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
-# imgname = 'ILSVRC2012_val_00000001.JPEG'
+# imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
-data_set_size = 50000
+data_set_size = 100
 
-model_1 = tf.keras.applications.MobileNetV2()
-model_2 = tf.keras.applications.ResNet50()
-model_3 = tf.keras.applications.VGG16()
-# model_3.summary()
+# Load MobileNetV2
+model_1 = torch.hub.load('pytorch/vision:v0.9.0', 'mobilenet_v2', pretrained=True)
+model_1.eval()
 
-# Preprocess for models in format 224x224, axis 0
-def prepare_img_model_224_224(img_src_path):
-	image_set = []
-	path = img_src_path
-	for i in range(data_set_size):
-		img = image.load_img(path + image_src[i], target_size=(224, 224))
-		img_array = image.img_to_array(img)
-		img_exp_dims = np.expand_dims(img_array, axis=0)
-		image_set.append(img_exp_dims)
-		print('...')
-	
-	images = tf.convert_to_tensor(image_set)
-	images = tf.reshape(images, (data_set_size, 224, 224, 3))
-	return images
+# Mount ground truth file
+ground_truth = {}
+def mount_ground_truth(file):
+	file_variable = open(file)
+	all_lines_variable = file_variable.readlines()
+	# print(type(all_lines_variable))
+	# print(len(all_lines_variable))
+	for line in all_lines_variable:
+		list_line = line.split(' ')
+		filename = list_line[0]
+		label    = int(list_line[1])
+		# print(filename, ' ' , label)
+		ground_truth[filename] = label
 
-# Preprocessed images 224x224, aixs 0
-preproc_images_224_224 = prepare_img_model_224_224(img_src_path)
-
-# Preprocess and predict for MobileNetV2
-# preprocessed_img_model_1 = tf.keras.applications.mobilenet_v2.preprocess_input(preproc_images_224_224)
-# prediction_model_1 = model_1.predict(preprocessed_img_model_1)
-# results_model_1 = tf.keras.applications.mobilenet_v2.decode_predictions(prediction_model_1)
-# # print(results_model_1)
-
-# # Preprocess and predict for ResNet50
-# preprocessed_img_model_2 = tf.keras.applications.resnet.preprocess_input(preproc_images_224_224)
-# prediction_model_2 = model_2.predict(preprocessed_img_model_2)
-# results_model_2 = tf.keras.applications.resnet.decode_predictions(prediction_model_2)
-# # print(results_model_2)
-
-# # Preprocess and predict for VGG16
-# preprocessed_img_model_3 = tf.keras.applications.vgg16.preprocess_input(preproc_images_224_224)
-# prediction_model_3 = model_3.predict(preprocessed_img_model_3)
-# results_model_3 = tf.keras.applications.vgg16.decode_predictions(prediction_model_3)
-# # print(results_model_3)
-
-# # Mount ground truth file
-# ground_truth = {}
-# def mount_ground_truth(file):
-# 	file_variable = open(file)
-# 	all_lines_variable = file_variable.readlines()
-# 	# print(type(all_lines_variable))
-# 	# print(len(all_lines_variable))
-# 	for line in all_lines_variable:
-# 		list_line = line.split(' ')
-# 		filename = list_line[0]
-# 		label    = int(list_line[1])
-# 		# print(filename, ' ' , label)
-# 		ground_truth[filename] = label
-
-# # Mount labels file
+# Mount labels file
 # labels = {}
 # def mount_labels(file):
 # 	i = 0
@@ -88,52 +45,52 @@ preproc_images_224_224 = prepare_img_model_224_224(img_src_path)
 # 		i += 1
 
 # mount_labels(labels_path)
-# mount_ground_truth(ground_truth_path)
+mount_ground_truth(ground_truth_path)
 
-# # Function that returns top 1 precision
-# def top_one_precision(result):
-# 	correct = 0.0
-# 	for i in range(len(result)):
-# 		top_one_result = result[i][0][1].replace('_', ' ')
-# 		if labels[top_one_result] == ground_truth[image_src[i]]:
-# 			correct += 1
+# Preprocess function
+preprocess = transforms.Compose([
+			transforms.Resize(256),
+			transforms.CenterCrop(224),
+			transforms.ToTensor(),
+			transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+		])
 
-# 	precision = correct/data_set_size
-# 	return precision
+# Read the categories
+with open(labels_path, "r") as f:
+    categories = [s.strip() for s in f.readlines()]
 
-# # Function that returns top 5 precision
-# def top_five_precision(result):
-# 	correct = 0.0
-# 	for i in range(len(result)):
-# 		top_one_result = result[i][0][1].replace('_', ' ')
-# 		top_two_result = result[i][1][1].replace('_', ' ')
-# 		top_three_result = result[i][2][1].replace('_', ' ')
-# 		top_four_result = result[i][3][1].replace('_', ' ')
-# 		top_five_result = result[i][4][1].replace('_', ' ')
-# 		if (labels[top_one_result] == ground_truth[image_src[i]] or 
-# 		labels[top_two_result] == ground_truth[image_src[i]] or 
-# 		labels[top_three_result] == ground_truth[image_src[i]] or
-# 		labels[top_four_result] == ground_truth[image_src[i]] or
-# 		labels[top_five_result] == ground_truth[image_src[i]]):
-# 			correct += 1
+# Function that predicts images 1 by 1 for given model, returns values from 0 to 1
+def model_prediction(model):
+	top_1_rate = 0.0
+	top_5_rate = 0.0
 
-# 	precision = correct/data_set_size
-# 	return precision
+	for i in range(data_set_size):
+		input_image = Image.open(img_src_path + image_src[i])
+		converted_image = input_image.convert(mode='RGB')
+		input_tensor = preprocess(converted_image)
+		input_batch = input_tensor.unsqueeze(0) # create a mini-batch as expected by the model
+		with torch.no_grad():
+			output = model(input_batch)
+		probabilities = torch.nn.functional.softmax(output[0], dim=0)
 
-# # Precisions MobileNetV2
-# precision_model_1_top_1 = top_one_precision(results_model_1)
-# precision_model_1_top_5 = top_five_precision(results_model_1)
-# print('MobileNetV2 precision top 1: {}'.format(precision_model_1_top_1))
-# print('MobileNetV2 precision top 5: {}'.format(precision_model_1_top_5))
+		# Evaluate top 1 and top 5
+		_, top5_catid = torch.topk(probabilities, 5)
+		if top5_catid[0] == ground_truth[image_src[i]]:
+			top_1_rate += 1
+		if (top5_catid[0] == ground_truth[image_src[i]] or
+			top5_catid[1] == ground_truth[image_src[i]] or
+			top5_catid[2] == ground_truth[image_src[i]] or
+			top5_catid[3] == ground_truth[image_src[i]] or
+			top5_catid[4] == ground_truth[image_src[i]]):
+			top_5_rate += 1
+	
+	return top_1_rate/data_set_size, top_5_rate/data_set_size
 
-# # Precisions ResNet50
-# precision_model_2_top_1 = top_one_precision(results_model_2)
-# precision_model_2_top_5 = top_five_precision(results_model_2)
-# print('ResNet50 precision top 1: {}'.format(precision_model_2_top_1))
-# print('ResNet50 precision top 5: {}'.format(precision_model_2_top_5))
-
-# # Precisions VGG16
-# precision_model_3_top_1 = top_one_precision(results_model_3)
-# precision_model_3_top_5 = top_five_precision(results_model_3)
-# print('VGG16 precision top 1: {}'.format(precision_model_3_top_1))
-# print('VGG16 precision top 5: {}'.format(precision_model_3_top_5))
+# Predict MobileNetV2
+model_1_top_1, model_1_top_5 = model_prediction(model_1)
+model_1_top_1_hits = model_1_top_1*100
+model_1_top_5_hits = model_1_top_5*100
+model_1_top_1_err = 100 - model_1_top_1_hits
+model_1_top_5_err = 100 - model_1_top_5_hits
+print("MobileNetV2 top 1 error: {}".format(model_1_top_1_err))
+print("MobileNetV2 top 5 error: {}".format(model_1_top_5_err))
