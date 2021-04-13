@@ -13,6 +13,7 @@ labels_path = '../src/labels/imagenet_classes.txt'
 ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
+image_src.sort()
 data_set_size = 25
 
 # Load MobileNetV2
