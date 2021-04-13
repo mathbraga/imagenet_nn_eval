@@ -65,6 +65,7 @@ def model_prediction(model):
 	top_5_rate = 0.0
 
 	for i in range(data_set_size):
+		print(image_src[i])
 		input_image = Image.open(img_src_path + image_src[i])
 		converted_image = input_image.convert(mode='RGB')
 		input_tensor = preprocess(converted_image)
@@ -75,7 +76,7 @@ def model_prediction(model):
 
 		# Evaluate top 1 and top 5
 		_, top5_catid = torch.topk(probabilities, 5)
-		print(categories[top5_catid[0]])
+		# print(categories[top5_catid[0]])
 		if top5_catid[0] == ground_truth[image_src[i]]:
 			top_1_rate += 1
 		if (top5_catid[0] == ground_truth[image_src[i]] or
