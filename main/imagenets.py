@@ -4,13 +4,17 @@
 # VGG16 = model_4
 # Alexnet = model_5
 # GoogLeNet = model_6
+# DenseNet121 = model_7
+# InceptionV3 = model_8
+# Shufflenet = model_9
 
 import torch
-from PIL import Image
-from torchvision import transforms
 import numpy as np
 import os
 import sys
+import time
+from PIL import Image
+from torchvision import transforms
 
 img_src_path = '../src/imagenet2012_obj/'
 labels_path = '../src/labels/imagenet_classes.txt'
@@ -56,14 +60,23 @@ preprocess = transforms.Compose([
 			transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
 		])
 
+# Preprocess function exclusive for InceptionV3
+preprocess_inception = transforms.Compose([
+			transforms.Resize(299),
+			transforms.CenterCrop(299),
+			transforms.ToTensor(),
+			transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+		])
+
 # Read the categories
 with open(labels_path, "r") as f:
     categories = [s.strip() for s in f.readlines()]
 
 # Function that predicts images 1 by 1 for given model, returns values from 0 to 1
-def model_prediction(model):
+def model_prediction(model, preprocess):
 	top_1_rate = 0.0
 	top_5_rate = 0.0
+	exec_time = 0.0
 
 	for i in range(data_set_size):
 		# print(i)
@@ -72,7 +85,9 @@ def model_prediction(model):
 		input_tensor = preprocess(converted_image)
 		input_batch = input_tensor.unsqueeze(0) # create a mini-batch as expected by the model
 		with torch.no_grad():
+			start_time = time.time()
 			output = model(input_batch)
+			exec_time += time.time() - start_time
 		probabilities = torch.nn.functional.softmax(output[0], dim=0)
 
 		# Evaluate top 1 and top 5
@@ -86,6 +101,8 @@ def model_prediction(model):
 			top5_catid[4] == ground_truth[image_src[i]]):
 			top_5_rate += 1
 	
+	print("Total time: {0:10.3f} s".format(exec_time))
+	print("Average time per image: {0:6.3f} s".format(exec_time/data_set_size))
 	return top_1_rate/data_set_size, top_5_rate/data_set_size
 
 
@@ -95,7 +112,7 @@ if sys.argv[1] == 'model_1':
 	model_1 = torch.hub.load('pytorch/vision:v0.9.0', 'mobilenet_v2', pretrained=True)
 	model_1.eval()
 
-	model_1_top_1, model_1_top_5 = model_prediction(model_1)
+	model_1_top_1, model_1_top_5 = model_prediction(model_1, preprocess)
 	model_1_top_1_acc = model_1_top_1*100
 	model_1_top_5_acc = model_1_top_5*100
 	model_1_top_1_err = 100 - model_1_top_1_acc
@@ -111,7 +128,7 @@ if sys.argv[1] == 'model_2':
 	model_2 = torch.hub.load('pytorch/vision:v0.9.0', 'resnet50', pretrained=True)
 	model_2.eval()
 
-	model_2_top_1, model_2_top_5 = model_prediction(model_2)
+	model_2_top_1, model_2_top_5 = model_prediction(model_2, preprocess)
 	model_2_top_1_acc = model_2_top_1*100
 	model_2_top_5_acc = model_2_top_5*100
 	model_2_top_1_err = 100 - model_2_top_1_acc
@@ -127,7 +144,7 @@ if sys.argv[1] == 'model_3':
 	model_3 = torch.hub.load('pytorch/vision:v0.9.0', 'squeezenet1_0', pretrained=True)
 	model_3.eval()
 
-	model_3_top_1, model_3_top_5 = model_prediction(model_3)
+	model_3_top_1, model_3_top_5 = model_prediction(model_3, preprocess)
 	model_3_top_1_acc = model_3_top_1*100
 	model_3_top_5_acc = model_3_top_5*100
 	model_3_top_1_err = 100 - model_3_top_1_acc
@@ -143,7 +160,7 @@ if sys.argv[1] == 'model_4':
 	model_4 = torch.hub.load('pytorch/vision:v0.9.0', 'vgg16', pretrained=True)
 	model_4.eval()
 
-	model_4_top_1, model_4_top_5 = model_prediction(model_4)
+	model_4_top_1, model_4_top_5 = model_prediction(model_4, preprocess)
 	model_4_top_1_acc = model_4_top_1*100
 	model_4_top_5_acc = model_4_top_5*100
 	model_4_top_1_err = 100 - model_4_top_1_acc
@@ -159,7 +176,7 @@ if sys.argv[1] == 'model_5':
 	model_5 = torch.hub.load('pytorch/vision:v0.9.0', 'alexnet', pretrained=True)
 	model_5.eval()
 
-	model_5_top_1, model_5_top_5 = model_prediction(model_5)
+	model_5_top_1, model_5_top_5 = model_prediction(model_5, preprocess)
 	model_5_top_1_acc = model_5_top_1*100
 	model_5_top_5_acc = model_5_top_5*100
 	model_5_top_1_err = 100 - model_5_top_1_acc
@@ -175,7 +192,7 @@ if sys.argv[1] == 'model_6':
 	model_6 = torch.hub.load('pytorch/vision:v0.9.0', 'googlenet', pretrained=True)
 	model_6.eval()
 
-	model_6_top_1, model_6_top_5 = model_prediction(model_6)
+	model_6_top_1, model_6_top_5 = model_prediction(model_6, preprocess)
 	model_6_top_1_acc = model_6_top_1*100
 	model_6_top_5_acc = model_6_top_5*100
 	model_6_top_1_err = 100 - model_6_top_1_acc
@@ -184,3 +201,51 @@ if sys.argv[1] == 'model_6':
 	print("GoogLeNet top 5 accuracy: {}".format(model_6_top_5_acc))
 	# print("GoogLeNet top 1 error: {}".format(model_6_top_1_err))
 	# print("GoogLeNet top 5 error: {}".format(model_6_top_5_err))
+
+# Predict DenseNet121
+if sys.argv[1] == 'model_7':
+	# Load DenseNet121
+	model_7 = torch.hub.load('pytorch/vision:v0.9.0', 'densenet121', pretrained=True)
+	model_7.eval()
+
+	model_7_top_1, model_7_top_5 = model_prediction(model_7, preprocess)
+	model_7_top_1_acc = model_7_top_1*100
+	model_7_top_5_acc = model_7_top_5*100
+	model_7_top_1_err = 100 - model_7_top_1_acc
+	model_7_top_5_err = 100 - model_7_top_5_acc
+	print("DenseNet121 top 1 accuracy: {}".format(model_7_top_1_acc))
+	print("DenseNet121 top 5 accuracy: {}".format(model_7_top_5_acc))
+	# print("DenseNet121 top 1 error: {}".format(model_7_top_1_err))
+	# print("DenseNet121 top 5 error: {}".format(model_7_top_5_err))
+
+# Predict InceptionV3
+if sys.argv[1] == 'model_8':
+	# Load InceptionV3
+	model_8 = torch.hub.load('pytorch/vision:v0.9.0', 'inception_v3', pretrained=True)
+	model_8.eval()
+
+	model_8_top_1, model_8_top_5 = model_prediction(model_8, preprocess_inception)
+	model_8_top_1_acc = model_8_top_1*100
+	model_8_top_5_acc = model_8_top_5*100
+	model_8_top_1_err = 100 - model_8_top_1_acc
+	model_8_top_5_err = 100 - model_8_top_5_acc
+	print("InceptionV3 top 1 accuracy: {}".format(model_8_top_1_acc))
+	print("InceptionV3 top 5 accuracy: {}".format(model_8_top_5_acc))
+	# print("InceptionV3 top 1 error: {}".format(model_8_top_1_err))
+	# print("InceptionV3 top 5 error: {}".format(model_8_top_5_err))
+
+# Predict Shufflenet
+if sys.argv[1] == 'model_9':
+	# Load Shufflenet
+	model_9 = torch.hub.load('pytorch/vision:v0.9.0', 'shufflenet_v2_x1_0', pretrained=True)
+	model_9.eval()
+
+	model_9_top_1, model_9_top_5 = model_prediction(model_9, preprocess)
+	model_9_top_1_acc = model_9_top_1*100
+	model_9_top_5_acc = model_9_top_5*100
+	model_9_top_1_err = 100 - model_9_top_1_acc
+	model_9_top_5_err = 100 - model_9_top_5_acc
+	print("Shufflenet top 1 accuracy: {}".format(model_9_top_1_acc))
+	print("Shufflenet top 5 accuracy: {}".format(model_9_top_5_acc))
+	# print("Shufflenet top 1 error: {}".format(model_9_top_1_err))
+	# print("Shufflenet top 5 error: {}".format(model_9_top_5_err))
