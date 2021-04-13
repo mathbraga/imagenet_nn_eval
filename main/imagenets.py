@@ -1,6 +1,6 @@
 # MobileNetV2 = model_1
 # ResNet50 = model_2
-# VGG16 = model_3
+# SqueezeNet1.0 = model_3
 
 import torch
 from PIL import Image
@@ -15,7 +15,7 @@ ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
 image_src.sort()
-data_set_size = 25
+data_set_size = 100
 
 # Mount ground truth file
 ground_truth = {}
@@ -94,12 +94,14 @@ if sys.argv[1] == 'model_1':
 	model_1.eval()
 
 	model_1_top_1, model_1_top_5 = model_prediction(model_1)
-	model_1_top_1_hits = model_1_top_1*100
-	model_1_top_5_hits = model_1_top_5*100
-	model_1_top_1_err = 100 - model_1_top_1_hits
-	model_1_top_5_err = 100 - model_1_top_5_hits
-	print("MobileNetV2 top 1 error: {}".format(model_1_top_1_err))
-	print("MobileNetV2 top 5 error: {}".format(model_1_top_5_err))
+	model_1_top_1_acc = model_1_top_1*100
+	model_1_top_5_acc = model_1_top_5*100
+	model_1_top_1_err = 100 - model_1_top_1_acc
+	model_1_top_5_err = 100 - model_1_top_5_acc
+	print("MobileNetV2 top 1 accuracy: {}".format(model_1_top_1_acc))
+	print("MobileNetV2 top 5 accuracy: {}".format(model_1_top_5_acc))
+	# print("MobileNetV2 top 1 error: {}".format(model_1_top_1_err))
+	# print("MobileNetV2 top 5 error: {}".format(model_1_top_5_err))
 
 # Predict ResNet50
 if sys.argv[1] == 'model_2':
@@ -108,9 +110,27 @@ if sys.argv[1] == 'model_2':
 	model_2.eval()
 
 	model_2_top_1, model_2_top_5 = model_prediction(model_2)
-	model_2_top_1_hits = model_2_top_1*100
-	model_2_top_5_hits = model_2_top_5*100
-	model_2_top_1_err = 100 - model_2_top_1_hits
-	model_2_top_5_err = 100 - model_2_top_5_hits
-	print("ResNet50 top 1 error: {}".format(model_2_top_1_err))
-	print("ResNet50 top 5 error: {}".format(model_2_top_5_err))
+	model_2_top_1_acc = model_2_top_1*100
+	model_2_top_5_acc = model_2_top_5*100
+	model_2_top_1_err = 100 - model_2_top_1_acc
+	model_2_top_5_err = 100 - model_2_top_5_acc
+	print("ResNet50 top 1 accuracy: {}".format(model_2_top_1_acc))
+	print("ResNet50 top 5 accuracy: {}".format(model_2_top_5_acc))
+	# print("ResNet50 top 1 error: {}".format(model_2_top_1_err))
+	# print("ResNet50 top 5 error: {}".format(model_2_top_5_err))
+
+# Predict SqueezeNet1.0
+if sys.argv[1] == 'model_3':
+	# Load SqueezeNet1.0
+	model_3 = torch.hub.load('pytorch/vision:v0.9.0', 'squeezenet1_0', pretrained=True)
+	model_3.eval()
+
+	model_3_top_1, model_3_top_5 = model_prediction(model_3)
+	model_3_top_1_acc = model_3_top_1*100
+	model_3_top_5_acc = model_3_top_5*100
+	model_3_top_1_err = 100 - model_3_top_1_acc
+	model_3_top_5_err = 100 - model_3_top_5_acc
+	print("SqueezeNet1.0 top 1 accuracy: {}".format(model_3_top_1_acc))
+	print("SqueezeNet1.0 top 5 accuracy: {}".format(model_3_top_5_acc))
+	# print("SqueezeNet1.0 top 1 error: {}".format(model_3_top_1_err))
+	# print("SqueezeNet1.0 top 5 error: {}".format(model_3_top_5_err))
