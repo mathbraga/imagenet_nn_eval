@@ -7,6 +7,7 @@ from PIL import Image
 from torchvision import transforms
 import numpy as np
 import os
+import sys
 
 img_src_path = '../src/imagenet2012_obj/'
 labels_path = '../src/labels/imagenet_classes.txt'
@@ -14,11 +15,7 @@ ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
 image_src.sort()
-data_set_size = 50000
-
-# Load MobileNetV2
-model_1 = torch.hub.load('pytorch/vision:v0.9.0', 'mobilenet_v2', pretrained=True)
-model_1.eval()
+data_set_size = 25
 
 # Mount ground truth file
 ground_truth = {}
@@ -66,7 +63,7 @@ def model_prediction(model):
 	top_5_rate = 0.0
 
 	for i in range(data_set_size):
-		print(i)
+		# print(i)
 		input_image = Image.open(img_src_path + image_src[i])
 		converted_image = input_image.convert(mode='RGB')
 		input_tensor = preprocess(converted_image)
@@ -77,7 +74,7 @@ def model_prediction(model):
 
 		# Evaluate top 1 and top 5
 		_, top5_catid = torch.topk(probabilities, 5)
-		# print(categories[top5_catid[0]])
+		print(categories[top5_catid[0]])
 		if top5_catid[0] == ground_truth[image_src[i]]:
 			top_1_rate += 1
 		if (top5_catid[0] == ground_truth[image_src[i]] or
@@ -89,11 +86,31 @@ def model_prediction(model):
 	
 	return top_1_rate/data_set_size, top_5_rate/data_set_size
 
+
 # Predict MobileNetV2
-model_1_top_1, model_1_top_5 = model_prediction(model_1)
-model_1_top_1_hits = model_1_top_1*100
-model_1_top_5_hits = model_1_top_5*100
-model_1_top_1_err = 100 - model_1_top_1_hits
-model_1_top_5_err = 100 - model_1_top_5_hits
-print("MobileNetV2 top 1 error: {}".format(model_1_top_1_err))
-print("MobileNetV2 top 5 error: {}".format(model_1_top_5_err))
+if sys.argv[1] == 'model_1':
+	# Load MobileNetV2
+	model_1 = torch.hub.load('pytorch/vision:v0.9.0', 'mobilenet_v2', pretrained=True)
+	model_1.eval()
+
+	model_1_top_1, model_1_top_5 = model_prediction(model_1)
+	model_1_top_1_hits = model_1_top_1*100
+	model_1_top_5_hits = model_1_top_5*100
+	model_1_top_1_err = 100 - model_1_top_1_hits
+	model_1_top_5_err = 100 - model_1_top_5_hits
+	print("MobileNetV2 top 1 error: {}".format(model_1_top_1_err))
+	print("MobileNetV2 top 5 error: {}".format(model_1_top_5_err))
+
+# Predict ResNet50
+if sys.argv[1] == 'model_2':
+	# Load ResNet50
+	model_2 = torch.hub.load('pytorch/vision:v0.9.0', 'resnet50', pretrained=True)
+	model_2.eval()
+
+	model_2_top_1, model_2_top_5 = model_prediction(model_2)
+	model_2_top_1_hits = model_2_top_1*100
+	model_2_top_5_hits = model_2_top_5*100
+	model_2_top_1_err = 100 - model_2_top_1_hits
+	model_2_top_5_err = 100 - model_2_top_5_hits
+	print("ResNet50 top 1 error: {}".format(model_2_top_1_err))
+	print("ResNet50 top 5 error: {}".format(model_2_top_5_err))
