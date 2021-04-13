@@ -1,6 +1,9 @@
 # MobileNetV2 = model_1
 # ResNet50 = model_2
 # SqueezeNet1.0 = model_3
+# VGG16 = model_4
+# Alexnet = model_5
+# GoogLeNet = model_6
 
 import torch
 from PIL import Image
@@ -15,7 +18,7 @@ ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
 image_src.sort()
-data_set_size = 100
+data_set_size = 25
 
 # Mount ground truth file
 ground_truth = {}
@@ -74,7 +77,6 @@ def model_prediction(model):
 
 		# Evaluate top 1 and top 5
 		_, top5_catid = torch.topk(probabilities, 5)
-		print(categories[top5_catid[0]])
 		if top5_catid[0] == ground_truth[image_src[i]]:
 			top_1_rate += 1
 		if (top5_catid[0] == ground_truth[image_src[i]] or
@@ -134,3 +136,51 @@ if sys.argv[1] == 'model_3':
 	print("SqueezeNet1.0 top 5 accuracy: {}".format(model_3_top_5_acc))
 	# print("SqueezeNet1.0 top 1 error: {}".format(model_3_top_1_err))
 	# print("SqueezeNet1.0 top 5 error: {}".format(model_3_top_5_err))
+
+# Predict VGG16
+if sys.argv[1] == 'model_4':
+	# Load VGG16
+	model_4 = torch.hub.load('pytorch/vision:v0.9.0', 'vgg16', pretrained=True)
+	model_4.eval()
+
+	model_4_top_1, model_4_top_5 = model_prediction(model_4)
+	model_4_top_1_acc = model_4_top_1*100
+	model_4_top_5_acc = model_4_top_5*100
+	model_4_top_1_err = 100 - model_4_top_1_acc
+	model_4_top_5_err = 100 - model_4_top_5_acc
+	print("VGG16 top 1 accuracy: {}".format(model_4_top_1_acc))
+	print("VGG16 top 5 accuracy: {}".format(model_4_top_5_acc))
+	# print("VGG16 top 1 error: {}".format(model_4_top_1_err))
+	# print("VGG16 top 5 error: {}".format(model_4_top_5_err))
+
+# Predict Alexnet
+if sys.argv[1] == 'model_5':
+	# Load Alexnet
+	model_5 = torch.hub.load('pytorch/vision:v0.9.0', 'alexnet', pretrained=True)
+	model_5.eval()
+
+	model_5_top_1, model_5_top_5 = model_prediction(model_5)
+	model_5_top_1_acc = model_5_top_1*100
+	model_5_top_5_acc = model_5_top_5*100
+	model_5_top_1_err = 100 - model_5_top_1_acc
+	model_5_top_5_err = 100 - model_5_top_5_acc
+	print("Alexnet top 1 accuracy: {}".format(model_5_top_1_acc))
+	print("Alexnet top 5 accuracy: {}".format(model_5_top_5_acc))
+	# print("Alexnet top 1 error: {}".format(model_5_top_1_err))
+	# print("Alexnet top 5 error: {}".format(model_5_top_5_err))
+
+# Predict GoogLeNet
+if sys.argv[1] == 'model_6':
+	# Load GoogLeNet
+	model_6 = torch.hub.load('pytorch/vision:v0.9.0', 'googlenet', pretrained=True)
+	model_6.eval()
+
+	model_6_top_1, model_6_top_5 = model_prediction(model_6)
+	model_6_top_1_acc = model_6_top_1*100
+	model_6_top_5_acc = model_6_top_5*100
+	model_6_top_1_err = 100 - model_6_top_1_acc
+	model_6_top_5_err = 100 - model_6_top_5_acc
+	print("GoogLeNet top 1 accuracy: {}".format(model_6_top_1_acc))
+	print("GoogLeNet top 5 accuracy: {}".format(model_6_top_5_acc))
+	# print("GoogLeNet top 1 error: {}".format(model_6_top_1_err))
+	# print("GoogLeNet top 5 error: {}".format(model_6_top_5_err))
