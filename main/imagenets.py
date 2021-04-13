@@ -13,7 +13,7 @@ labels_path = '../src/labels/imagenet_classes.txt'
 ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
-data_set_size = 50000
+data_set_size = 25
 
 # Load MobileNetV2
 model_1 = torch.hub.load('pytorch/vision:v0.9.0', 'mobilenet_v2', pretrained=True)
@@ -75,6 +75,7 @@ def model_prediction(model):
 
 		# Evaluate top 1 and top 5
 		_, top5_catid = torch.topk(probabilities, 5)
+		print(categories[top5_catid[0]])
 		if top5_catid[0] == ground_truth[image_src[i]]:
 			top_1_rate += 1
 		if (top5_catid[0] == ground_truth[image_src[i]] or
