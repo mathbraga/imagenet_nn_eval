@@ -14,7 +14,7 @@ ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
 image_src.sort()
-data_set_size = 25
+data_set_size = 50000
 
 # Load MobileNetV2
 model_1 = torch.hub.load('pytorch/vision:v0.9.0', 'mobilenet_v2', pretrained=True)
@@ -66,7 +66,7 @@ def model_prediction(model):
 	top_5_rate = 0.0
 
 	for i in range(data_set_size):
-		print(image_src[i])
+		print(i)
 		input_image = Image.open(img_src_path + image_src[i])
 		converted_image = input_image.convert(mode='RGB')
 		input_tensor = preprocess(converted_image)
