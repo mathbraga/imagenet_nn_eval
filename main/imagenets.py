@@ -132,10 +132,10 @@ def model_prediction(model, preprocess):
 		converted_image = input_image.convert(mode='RGB')
 		input_tensor = preprocess(converted_image)
 		input_batch = input_tensor.unsqueeze(0) # create a mini-batch as expected by the model
-		with torch.no_grad():
-			start_time = time.time()
-			output = model(input_batch)
-			exec_time += time.time() - start_time
+		# with torch.no_grad():
+		start_time = time.time()
+		output = model(input_batch)
+		exec_time += time.time() - start_time
 		probabilities = torch.nn.functional.softmax(output[0], dim=0)
 
 		# Evaluate top 1 and top 5
