@@ -92,7 +92,7 @@ def prepare_img_model_1(img_src_path):
 	
 	precision_top_1 = top_1_rate/data_set_size
 	precision_top_5 = top_5_rate/data_set_size
-	return precision_top_1, precision_top_5, exec_time
+	return precision_top_1*100, precision_top_5*100, exec_time
 		
 model_test_top_1, model_test_top_2, model_test_exec_time = prepare_img_model_1(img_src_path)
 print("MobileNetV2(tf) top 1 accuracy: {}".format(model_test_top_1))
