@@ -25,7 +25,7 @@ ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
 image_src.sort()
-data_set_size = 35
+data_set_size = 1
 
 model_test = tf.keras.applications.MobileNetV2()
 # model_test.summary()
@@ -45,60 +45,61 @@ def mount_ground_truth(file):
 		ground_truth[filename] = label
 
 # Mount labels file
-# labels = {}
-# def mount_labels(file):
-# 	i = 0
-# 	file_variable = open(file)
-# 	all_lines_variable = file_variable.readlines()
-# 	for line in all_lines_variable:
-# 		ln = line.replace('\n', '')
-# 		labels[ln] = i
-# 		i += 1
+labels = {}
+def mount_labels(file):
+	i = 0
+	file_variable = open(file)
+	all_lines_variable = file_variable.readlines()
+	for line in all_lines_variable:
+		ln = line.replace('\n', '')
+		labels[ln] = i
+		i += 1
 
-# mount_labels(labels_path)
+mount_labels(labels_path)
 mount_ground_truth(ground_truth_path)
 
-# def prepare_img_model_1(img_src_path):
-# 	path = img_src_path
-# 	top_1_rate = 0.0
-# 	top_5_rate = 0.0
-# 	exec_time = 0.0
-# 	for i in range(data_set_size):
-# 		# Preprocess
-# 		img = image.load_img(path + image_src[i], target_size=(224, 224))
-# 		img_array = image.img_to_array(img)
-# 		img_exp_dims = np.expand_dims(img_array, axis=0)
-# 		target = tf.keras.applications.mobilenet_v2.preprocess_input(img_exp_dims)
-# 		# Prediction
-# 		start_time = time.time()
-# 		prediction_model_test = model_test.predict(target)
-# 		exec_time += time.time() - start_time
-# 		# Results
-# 		results_model_test = tf.keras.applications.mobilenet_v2.decode_predictions(prediction_model_test)
-# 		top_one_result = results_model_test[0][0][1].replace('_', ' ')
-# 		top_two_result = results_model_test[0][1][1].replace('_', ' ')
-# 		top_three_result = results_model_test[0][2][1].replace('_', ' ')
-# 		top_four_result = results_model_test[0][3][1].replace('_', ' ')
-# 		top_five_result = results_model_test[0][4][1].replace('_', ' ')
+def prepare_img_model_1(img_src_path):
+	path = img_src_path
+	top_1_rate = 0.0
+	top_5_rate = 0.0
+	exec_time = 0.0
+	for i in range(data_set_size):
+		# Preprocess
+		img = image.load_img(path + image_src[i], target_size=(224, 224))
+		img_array = image.img_to_array(img)
+		img_exp_dims = np.expand_dims(img_array, axis=0)
+		target = tf.keras.applications.mobilenet_v2.preprocess_input(img_exp_dims)
+		# Prediction
+		start_time = time.time()
+		prediction_model_test = model_test.predict(target)
+		exec_time += time.time() - start_time
+		# Results
+		results_model_test = tf.keras.applications.mobilenet_v2.decode_predictions(prediction_model_test)
+		print(results_model_test[0][0][1].replace('_', ' '))
+		top_one_result = results_model_test[0][0][1].replace('_', ' ')
+		top_two_result = results_model_test[0][1][1].replace('_', ' ')
+		top_three_result = results_model_test[0][2][1].replace('_', ' ')
+		top_four_result = results_model_test[0][3][1].replace('_', ' ')
+		top_five_result = results_model_test[0][4][1].replace('_', ' ')
 
-# 		if labels[top_one_result] == ground_truth[image_src[i]]:
-# 			top_1_rate += 1
-# 		if (labels[top_one_result] == ground_truth[image_src[i]] or 
-# 		labels[top_two_result] == ground_truth[image_src[i]] or 
-# 		labels[top_three_result] == ground_truth[image_src[i]] or
-# 		labels[top_four_result] == ground_truth[image_src[i]] or
-# 		labels[top_five_result] == ground_truth[image_src[i]]):
-# 			top_5_rate += 1
+		if labels[top_one_result] == ground_truth[image_src[i]]:
+			top_1_rate += 1
+		if (labels[top_one_result] == ground_truth[image_src[i]] or 
+		labels[top_two_result] == ground_truth[image_src[i]] or 
+		labels[top_three_result] == ground_truth[image_src[i]] or
+		labels[top_four_result] == ground_truth[image_src[i]] or
+		labels[top_five_result] == ground_truth[image_src[i]]):
+			top_5_rate += 1
 	
-# 	precision_top_1 = top_1_rate/data_set_size
-# 	precision_top_5 = top_5_rate/data_set_size
-# 	return precision_top_1*100, precision_top_5*100, exec_time
+	precision_top_1 = top_1_rate/data_set_size
+	precision_top_5 = top_5_rate/data_set_size
+	return precision_top_1*100, precision_top_5*100, exec_time
 		
-# model_test_top_1, model_test_top_2, model_test_exec_time = prepare_img_model_1(img_src_path)
-# print("MobileNetV2(tf) top 1 accuracy: {}".format(model_test_top_1))
-# print("MobileNetV2(tf) top 5 accuracy: {}".format(model_test_top_2))
-# print("Total time: {0:10.5f} s".format(model_test_exec_time))
-# print("Average time per image: {0:10.5f} s".format(model_test_exec_time/data_set_size))
+model_test_top_1, model_test_top_2, model_test_exec_time = prepare_img_model_1(img_src_path)
+print("Total time: {0:10.5f} s".format(model_test_exec_time))
+print("Average time per image: {0:10.5f} s".format(model_test_exec_time/data_set_size))
+print("MobileNetV2(tf) top 1 accuracy: {}".format(model_test_top_1))
+print("MobileNetV2(tf) top 5 accuracy: {}".format(model_test_top_2))
 
 # Preprocess function
 preprocess = transforms.Compose([
