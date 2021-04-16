@@ -40,6 +40,8 @@ def prepare_img_model_1(img_src_path):
 		results_model_test = tf.keras.applications.mobilenet_v2.decode_predictions(prediction_model_test)
 		print(results_model_test)
 
+prepare_img_model_1(img_src_path)
+
 # Mount ground truth file
 # ground_truth = {}
 # def mount_ground_truth(file):
