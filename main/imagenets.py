@@ -19,6 +19,13 @@ from tensorflow import keras
 from PIL import Image
 from torchvision import transforms
 
+import onnx
+from onnx_tf.backend import prepare
+
+onnx_model = onnx.load('../src/models/caffenet-9.onnx')  # load onnx model
+tf_rep = prepare(onnx_model)  # prepare tf representation
+tf_rep.summery()
+
 img_src_path = '../src/imagenet2012_obj/'
 labels_path = '../src/labels/imagenet_classes.txt'
 ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
@@ -26,9 +33,6 @@ ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
 image_src = os.listdir(img_src_path)
 image_src.sort()
 data_set_size = 50000
-
-model_10 = tf.keras.models.load_model('../src/models/caffenet.pb')
-model_10.summary()
 
 # Mount ground truth file
 # ground_truth = {}
