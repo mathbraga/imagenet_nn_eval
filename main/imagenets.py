@@ -25,7 +25,7 @@ ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
 image_src.sort()
-data_set_size = 25
+data_set_size = 35
 
 model_test = tf.keras.applications.MobileNetV2()
 # model_test.summary()
