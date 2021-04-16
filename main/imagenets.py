@@ -25,7 +25,7 @@ ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt'
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
 image_src.sort()
-data_set_size = 1
+data_set_size = 50000
 
 model_test = tf.keras.applications.MobileNetV2()
 # model_test.summary()
@@ -75,7 +75,6 @@ def prepare_img_model_1(img_src_path):
 		exec_time += time.time() - start_time
 		# Results
 		results_model_test = tf.keras.applications.mobilenet_v2.decode_predictions(prediction_model_test)
-		print(results_model_test[0][0][1].replace('_', ' '))
 		top_one_result = results_model_test[0][0][1].replace('_', ' ')
 		top_two_result = results_model_test[0][1][1].replace('_', ' ')
 		top_three_result = results_model_test[0][2][1].replace('_', ' ')
