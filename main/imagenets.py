@@ -27,7 +27,7 @@ image_src = os.listdir(img_src_path)
 image_src.sort()
 data_set_size = 50000
 
-model_10 = tf.keras.models.load_model('../src/models/caffenet-9.onnx')
+model_10 = tf.keras.models.load_model('../src/models/')
 model_10.summary()
 
 # Mount ground truth file
