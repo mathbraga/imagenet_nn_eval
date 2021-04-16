@@ -1,0 +1,91 @@
+2021-04-15 23:25:12.898767: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-15 23:25:13.786845: I tensorflow/compiler/jit/xla_cpu_device.cc:41] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-15 23:25:13.787424: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcuda.so.1
+2021-04-15 23:25:13.815255: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:941] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2021-04-15 23:25:13.815546: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1720] Found device 0 with properties: 
+pciBusID: 0000:01:00.0 name: GeForce GTX 1080 computeCapability: 6.1
+coreClock: 1.8095GHz coreCount: 20 deviceMemorySize: 7.93GiB deviceMemoryBandwidth: 298.32GiB/s
+2021-04-15 23:25:13.815561: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudart.so.11.0
+2021-04-15 23:25:13.817417: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublas.so.11
+2021-04-15 23:25:13.817444: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcublasLt.so.11
+2021-04-15 23:25:13.818303: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcufft.so.10
+2021-04-15 23:25:13.818510: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcurand.so.10
+2021-04-15 23:25:13.818568: W tensorflow/stream_executor/platform/default/dso_loader.cc:60] Could not load dynamic library 'libcusolver.so.10'; dlerror: libcusolver.so.10: cannot open shared object file: No such file or directory
+2021-04-15 23:25:13.819121: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcusparse.so.11
+2021-04-15 23:25:13.819205: I tensorflow/stream_executor/platform/default/dso_loader.cc:49] Successfully opened dynamic library libcudnn.so.8
+2021-04-15 23:25:13.819214: W tensorflow/core/common_runtime/gpu/gpu_device.cc:1757] Cannot dlopen some GPU libraries. Please make sure the missing libraries mentioned above are installed properly if you would like to use GPU. Follow the guide at https://www.tensorflow.org/install/gpu for how to download and setup the required libraries for your platform.
+Skipping registering GPU devices...
+2021-04-15 23:25:13.819385: I tensorflow/core/platform/cpu_feature_guard.cc:142] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2021-04-15 23:25:13.819726: I tensorflow/compiler/jit/xla_gpu_device.cc:99] Not creating XLA devices, tf_xla_enable_xla_devices not set
+2021-04-15 23:25:13.819747: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1261] Device interconnect StreamExecutor with strength 1 edge matrix:
+2021-04-15 23:25:13.819755: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1267]      
+2021-04-15 23:25:14.534907: I tensorflow/compiler/mlir/mlir_graph_optimization_pass.cc:116] None of the MLIR optimization passes are enabled (registered 2)
+2021-04-15 23:25:14.535224: I tensorflow/core/platform/profile_utils/cpu_utils.cc:112] CPU Frequency: 3199980000 Hz
+Total time: 1831.06109 s
+Average time per image:    0.03662 s
+MobileNetV2(tf) top 1 accuracy: 68.01
+MobileNetV2(tf) top 5 accuracy: 88.22
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time: 6450.36733 s
+Average time per image:    0.12901 s
+MobileNetV2 top 1 accuracy: 71.878
+MobileNetV2 top 5 accuracy: 90.286
+MobileNetV2 top 1 error: 28.122
+MobileNetV2 top 5 error: 9.713999999999999
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time: 10885.66094 s
+Average time per image:    0.21771 s
+ResNet152 top 1 accuracy: 78.312
+ResNet152 top 5 accuracy: 94.04599999999999
+ResNet152 top 1 error: 21.688000000000002
+ResNet152 top 5 error: 5.954000000000008
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time: 1403.47058 s
+Average time per image:    0.02807 s
+SqueezeNet1.0 top 1 accuracy: 58.092
+SqueezeNet1.0 top 5 accuracy: 80.42200000000001
+SqueezeNet1.0 top 1 error: 41.908
+SqueezeNet1.0 top 5 error: 19.57799999999999
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time: 8844.69642 s
+Average time per image:    0.17689 s
+VGG19 top 1 accuracy: 72.37599999999999
+VGG19 top 5 accuracy: 90.876
+VGG19 top 1 error: 27.62400000000001
+VGG19 top 5 error: 9.123999999999995
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:  887.69044 s
+Average time per image:    0.01775 s
+Alexnet top 1 accuracy: 56.52199999999999
+Alexnet top 5 accuracy: 79.066
+Alexnet top 1 error: 43.47800000000001
+Alexnet top 5 error: 20.933999999999997
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time: 3015.93737 s
+Average time per image:    0.06032 s
+GoogLeNet top 1 accuracy: 69.77799999999999
+GoogLeNet top 5 accuracy: 89.53
+GoogLeNet top 1 error: 30.22200000000001
+GoogLeNet top 5 error: 10.469999999999999
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time: 6376.31360 s
+Average time per image:    0.12753 s
+DenseNet201 top 1 accuracy: 76.896
+DenseNet201 top 5 accuracy: 93.37
+DenseNet201 top 1 error: 23.104
+DenseNet201 top 5 error: 6.6299999999999955
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time: 5322.50618 s
+Average time per image:    0.10645 s
+InceptionV3 top 1 accuracy: 77.212
+InceptionV3 top 5 accuracy: 93.526
+InceptionV3 top 1 error: 22.787999999999997
+InceptionV3 top 5 error: 6.474000000000004
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:  781.11378 s
+Average time per image:    0.01562 s
+Shufflenet top 1 accuracy: 69.362
+Shufflenet top 5 accuracy: 88.31599999999999
+Shufflenet top 1 error: 30.638000000000005
+Shufflenet top 5 error: 11.684000000000012
