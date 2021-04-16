@@ -1,10 +1,10 @@
 # MobileNetV2 = model_1
-# ResNet50 = model_2
+# ResNet152 = model_2
 # SqueezeNet1.0 = model_3
-# VGG16 = model_4
+# VGG19 = model_4
 # Alexnet = model_5
 # GoogLeNet = model_6
-# DenseNet121 = model_7
+# DenseNet201 = model_7
 # InceptionV3 = model_8
 # Shufflenet = model_9
 
@@ -119,13 +119,13 @@ model_1_top_1_err = 100 - model_1_top_1_acc
 model_1_top_5_err = 100 - model_1_top_5_acc
 print("MobileNetV2 top 1 accuracy: {}".format(model_1_top_1_acc))
 print("MobileNetV2 top 5 accuracy: {}".format(model_1_top_5_acc))
-# print("MobileNetV2 top 1 error: {}".format(model_1_top_1_err))
-# print("MobileNetV2 top 5 error: {}".format(model_1_top_5_err))
+print("MobileNetV2 top 1 error: {}".format(model_1_top_1_err))
+print("MobileNetV2 top 5 error: {}".format(model_1_top_5_err))
 
 # Predict ResNet50
 # if sys.argv[1] == 'model_2':
 # Load ResNet50
-model_2 = torch.hub.load('pytorch/vision:v0.9.0', 'resnet50', pretrained=True)
+model_2 = torch.hub.load('pytorch/vision:v0.9.0', 'resnet152', pretrained=True)
 model_2.eval()
 
 model_2_top_1, model_2_top_5 = model_prediction(model_2, preprocess)
@@ -133,10 +133,10 @@ model_2_top_1_acc = model_2_top_1*100
 model_2_top_5_acc = model_2_top_5*100
 model_2_top_1_err = 100 - model_2_top_1_acc
 model_2_top_5_err = 100 - model_2_top_5_acc
-print("ResNet50 top 1 accuracy: {}".format(model_2_top_1_acc))
-print("ResNet50 top 5 accuracy: {}".format(model_2_top_5_acc))
-# print("ResNet50 top 1 error: {}".format(model_2_top_1_err))
-# print("ResNet50 top 5 error: {}".format(model_2_top_5_err))
+print("ResNet152 top 1 accuracy: {}".format(model_2_top_1_acc))
+print("ResNet152 top 5 accuracy: {}".format(model_2_top_5_acc))
+print("ResNet152 top 1 error: {}".format(model_2_top_1_err))
+print("ResNet152 top 5 error: {}".format(model_2_top_5_err))
 
 # Predict SqueezeNet1.0
 # if sys.argv[1] == 'model_3':
@@ -151,13 +151,13 @@ model_3_top_1_err = 100 - model_3_top_1_acc
 model_3_top_5_err = 100 - model_3_top_5_acc
 print("SqueezeNet1.0 top 1 accuracy: {}".format(model_3_top_1_acc))
 print("SqueezeNet1.0 top 5 accuracy: {}".format(model_3_top_5_acc))
-# print("SqueezeNet1.0 top 1 error: {}".format(model_3_top_1_err))
-# print("SqueezeNet1.0 top 5 error: {}".format(model_3_top_5_err))
+print("SqueezeNet1.0 top 1 error: {}".format(model_3_top_1_err))
+print("SqueezeNet1.0 top 5 error: {}".format(model_3_top_5_err))
 
 # Predict VGG16
 # if sys.argv[1] == 'model_4':
 # Load VGG16
-model_4 = torch.hub.load('pytorch/vision:v0.9.0', 'vgg16', pretrained=True)
+model_4 = torch.hub.load('pytorch/vision:v0.9.0', 'vgg19', pretrained=True)
 model_4.eval()
 
 model_4_top_1, model_4_top_5 = model_prediction(model_4, preprocess)
@@ -165,10 +165,10 @@ model_4_top_1_acc = model_4_top_1*100
 model_4_top_5_acc = model_4_top_5*100
 model_4_top_1_err = 100 - model_4_top_1_acc
 model_4_top_5_err = 100 - model_4_top_5_acc
-print("VGG16 top 1 accuracy: {}".format(model_4_top_1_acc))
-print("VGG16 top 5 accuracy: {}".format(model_4_top_5_acc))
-# print("VGG16 top 1 error: {}".format(model_4_top_1_err))
-# print("VGG16 top 5 error: {}".format(model_4_top_5_err))
+print("VGG19 top 1 accuracy: {}".format(model_4_top_1_acc))
+print("VGG19 top 5 accuracy: {}".format(model_4_top_5_acc))
+print("VGG19 top 1 error: {}".format(model_4_top_1_err))
+print("VGG19 top 5 error: {}".format(model_4_top_5_err))
 
 # Predict Alexnet
 # if sys.argv[1] == 'model_5':
@@ -183,8 +183,8 @@ model_5_top_1_err = 100 - model_5_top_1_acc
 model_5_top_5_err = 100 - model_5_top_5_acc
 print("Alexnet top 1 accuracy: {}".format(model_5_top_1_acc))
 print("Alexnet top 5 accuracy: {}".format(model_5_top_5_acc))
-# print("Alexnet top 1 error: {}".format(model_5_top_1_err))
-# print("Alexnet top 5 error: {}".format(model_5_top_5_err))
+print("Alexnet top 1 error: {}".format(model_5_top_1_err))
+print("Alexnet top 5 error: {}".format(model_5_top_5_err))
 
 # Predict GoogLeNet
 # if sys.argv[1] == 'model_6':
@@ -199,13 +199,13 @@ model_6_top_1_err = 100 - model_6_top_1_acc
 model_6_top_5_err = 100 - model_6_top_5_acc
 print("GoogLeNet top 1 accuracy: {}".format(model_6_top_1_acc))
 print("GoogLeNet top 5 accuracy: {}".format(model_6_top_5_acc))
-# print("GoogLeNet top 1 error: {}".format(model_6_top_1_err))
-# print("GoogLeNet top 5 error: {}".format(model_6_top_5_err))
+print("GoogLeNet top 1 error: {}".format(model_6_top_1_err))
+print("GoogLeNet top 5 error: {}".format(model_6_top_5_err))
 
 # Predict DenseNet121
 # if sys.argv[1] == 'model_7':
 # Load DenseNet121
-model_7 = torch.hub.load('pytorch/vision:v0.9.0', 'densenet121', pretrained=True)
+model_7 = torch.hub.load('pytorch/vision:v0.9.0', 'densenet201', pretrained=True)
 model_7.eval()
 
 model_7_top_1, model_7_top_5 = model_prediction(model_7, preprocess)
@@ -213,10 +213,10 @@ model_7_top_1_acc = model_7_top_1*100
 model_7_top_5_acc = model_7_top_5*100
 model_7_top_1_err = 100 - model_7_top_1_acc
 model_7_top_5_err = 100 - model_7_top_5_acc
-print("DenseNet121 top 1 accuracy: {}".format(model_7_top_1_acc))
-print("DenseNet121 top 5 accuracy: {}".format(model_7_top_5_acc))
-# print("DenseNet121 top 1 error: {}".format(model_7_top_1_err))
-# print("DenseNet121 top 5 error: {}".format(model_7_top_5_err))
+print("DenseNet201 top 1 accuracy: {}".format(model_7_top_1_acc))
+print("DenseNet201 top 5 accuracy: {}".format(model_7_top_5_acc))
+print("DenseNet201 top 1 error: {}".format(model_7_top_1_err))
+print("DenseNet201 top 5 error: {}".format(model_7_top_5_err))
 
 # Predict InceptionV3
 # if sys.argv[1] == 'model_8':
@@ -231,8 +231,8 @@ model_8_top_1_err = 100 - model_8_top_1_acc
 model_8_top_5_err = 100 - model_8_top_5_acc
 print("InceptionV3 top 1 accuracy: {}".format(model_8_top_1_acc))
 print("InceptionV3 top 5 accuracy: {}".format(model_8_top_5_acc))
-# print("InceptionV3 top 1 error: {}".format(model_8_top_1_err))
-# print("InceptionV3 top 5 error: {}".format(model_8_top_5_err))
+print("InceptionV3 top 1 error: {}".format(model_8_top_1_err))
+print("InceptionV3 top 5 error: {}".format(model_8_top_5_err))
 
 # Predict Shufflenet
 # if sys.argv[1] == 'model_9':
@@ -247,5 +247,5 @@ model_9_top_1_err = 100 - model_9_top_1_acc
 model_9_top_5_err = 100 - model_9_top_5_acc
 print("Shufflenet top 1 accuracy: {}".format(model_9_top_1_acc))
 print("Shufflenet top 5 accuracy: {}".format(model_9_top_5_acc))
-# print("Shufflenet top 1 error: {}".format(model_9_top_1_err))
-# print("Shufflenet top 5 error: {}".format(model_9_top_5_err))
+print("Shufflenet top 1 error: {}".format(model_9_top_1_err))
+print("Shufflenet top 5 error: {}".format(model_9_top_5_err))
