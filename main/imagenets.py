@@ -15,6 +15,7 @@ import os
 import sys
 import time
 from tensorflow import keras
+from tensorflow.keras.preprocessing import image
 from PIL import Image
 from torchvision import transforms
 
@@ -35,8 +36,8 @@ def prepare_img_model_1(img_src_path):
 		img = image.load_img(path + image_src[i], target_size=(224, 224))
 		img_array = image.img_to_array(img)
 		img_exp_dims = np.expand_dims(img_array, axis=0)
-		image = tf.keras.applications.mobilenet_v2.preprocess_input(img_exp_dims)
-		prediction_model_test = model_test.predict(image)
+		target = tf.keras.applications.mobilenet_v2.preprocess_input(img_exp_dims)
+		prediction_model_test = model_test.predict(target)
 		results_model_test = tf.keras.applications.mobilenet_v2.decode_predictions(prediction_model_test)
 		print(results_model_test)
 
