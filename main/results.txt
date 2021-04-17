@@ -1,4 +1,0 @@
-Traceback (most recent call last):
-  File "imagenets.py", line 32, in <module>
-    model_test = tf.keras.applications.MobileNetV2()
-NameError: name 'tf' is not defined
