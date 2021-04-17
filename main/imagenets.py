@@ -29,7 +29,7 @@ image_src = os.listdir(img_src_path)
 image_src.sort()
 data_set_size = 50000
 
-model_test = tf.keras.applications.MobileNetV2()
+# model_test = tf.keras.applications.MobileNetV2()
 # model_test.summary()
 
 # Mount ground truth file
