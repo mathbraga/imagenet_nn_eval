@@ -26,13 +26,14 @@ img_src_path = '../src/imagenet2012_obj/' # ILSVRC2012 path
 labels_path = '../src/labels/imagenet_classes.txt'
 ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt' # ILSVRC2012 ground truth path
 # ground_truth_path = '../src/groundtruth/extra_samples_val.txt' # personal samples ground truth path
-# imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
+imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
 image_src.sort()
 data_set_size = 20
 
-# model_test = tf.keras.applications.MobileNetV2()
-# model_test.summary()
+onnx_model = onnx.load('../src/models/caffenet-9.onnx')
+k_model = onnx_to_keras(onnx_model, [imgname])
+print(k_model)
 
 # Mount ground truth file
 ground_truth = {}
