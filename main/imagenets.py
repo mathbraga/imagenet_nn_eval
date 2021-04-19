@@ -8,7 +8,6 @@
 # InceptionV3 = model_8
 # Shufflenet = model_9
 # MNASnet = model_10
-# HarDNet = model_11
 
 import torch
 # import tensorflow as tf
@@ -28,7 +27,7 @@ ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt' # ILSVRC2012 ground 
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
 image_src.sort()
-data_set_size = 100
+data_set_size = 50000
 
 # Mount ground truth file
 ground_truth = {}
@@ -271,19 +270,3 @@ print("MNASnet top 1 accuracy: {}".format(model_10_top_1_acc))
 print("MNASnet top 5 accuracy: {}".format(model_10_top_5_acc))
 print("MNASnet top 1 error: {}".format(model_10_top_1_err))
 print("MNASnet top 5 error: {}".format(model_10_top_5_err))
-
-# Predict HarDNet
-# if sys.argv[1] == 'model_10':
-# Load HarDNet
-model_11 = torch.hub.load('PingoLH/Pytorch-HarDNet', 'hardnet68', pretrained=True)
-model_11.eval()
-
-model_11_top_1, model_11_top_5 = model_prediction(model_11, preprocess)
-model_11_top_1_acc = model_11_top_1*100
-model_11_top_5_acc = model_11_top_5*100
-model_11_top_1_err = 100 - model_11_top_1_acc
-model_11_top_5_err = 100 - model_11_top_5_acc
-print("HarDNet top 1 accuracy: {}".format(model_11_top_1_acc))
-print("HarDNet top 5 accuracy: {}".format(model_11_top_5_acc))
-print("HarDNet top 1 error: {}".format(model_11_top_1_err))
-print("HarDNet top 5 error: {}".format(model_11_top_5_err))
