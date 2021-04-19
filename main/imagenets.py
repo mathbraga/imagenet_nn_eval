@@ -19,15 +19,15 @@ import time
 from PIL import Image
 from torchvision import transforms
 
-img_src_path = '../src/imagenet2012_obj/' # ILSVRC2012 path
-# img_src_path = '../src/extra_samples/' # personal samples path
+# img_src_path = '../src/imagenet2012_obj/' # ILSVRC2012 path
+img_src_path = '../src/extra_samples/' # personal samples path
 labels_path = '../src/labels/imagenet_classes.txt'
-ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt' # ILSVRC2012 ground truth path
-# ground_truth_path = '../src/groundtruth/extra_samples_val.txt' # personal samples ground truth path
+# ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt' # ILSVRC2012 ground truth path
+ground_truth_path = '../src/groundtruth/extra_samples_val.txt' # personal samples ground truth path
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
 image_src.sort()
-data_set_size = 50000
+data_set_size = 30
 
 # Mount ground truth file
 ground_truth = {}
