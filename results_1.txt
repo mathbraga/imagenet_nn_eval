@@ -1,0 +1,53 @@
+----- MobileNetV2 -----
+Total time: 4495.21835 s
+Average time per image:    0.08990 s
+MobileNetV2 top 1 accuracy: 71.878
+MobileNetV2 top 5 accuracy: 90.286
+
+----- ResNet50 -----
+Total time: 3032.69213 s
+Average time per image:    0.06065 s
+ResNet50 top 1 accuracy: 76.13
+ResNet50 top 5 accuracy: 92.862
+
+----- SqueezeNet1.0 -----
+Total time: 1030.31634 s
+Average time per image:    0.02061 s
+SqueezeNet1.0 top 1 accuracy: 58.092
+SqueezeNet1.0 top 5 accuracy: 80.42200000000001
+
+----- VGG16 -----
+Total time: 4802.77946 s
+Average time per image:    0.09606 s
+VGG16 top 1 accuracy: 71.592
+VGG16 top 5 accuracy: 90.38199999999999
+
+----- Alexnet -----
+Total time:  663.99455 s
+Average time per image:    0.01328 s
+Alexnet top 1 accuracy: 56.52199999999999
+Alexnet top 5 accuracy: 79.066
+
+----- GoogLeNet -----
+Total time: 2223.13427 s
+Average time per image:    0.04446 s
+GoogLeNet top 1 accuracy: 69.77799999999999
+GoogLeNet top 5 accuracy: 89.53
+
+----- DenseNet121 -----
+Total time: 2693.02087 s
+Average time per image:    0.05386 s
+DenseNet121 top 1 accuracy: 74.434
+DenseNet121 top 5 accuracy: 91.972
+
+----- InceptionV3 -----
+Total time: 3660.31775 s
+Average time per image:    0.07321 s
+InceptionV3 top 1 accuracy: 77.212
+InceptionV3 top 5 accuracy: 93.526
+
+----- Shufflenet -----
+Total time:  538.22089 s
+Average time per image:    0.01076 s
+Shufflenet top 1 accuracy: 69.362
+Shufflenet top 5 accuracy: 88.31599999999999
