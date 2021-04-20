@@ -1,0 +1,8 @@
+----- MNASNet -----
+Total time:   10.59021 s
+Average time per image:    0.10590 s
+MNASNet top 1 accuracy: 86.0
+MNASNet top 5 accuracy: 97.0
+MNASNet top 1 error: 14.0
+MNASNet top 5 error: 3.0
+MNASNet total params: 4383312

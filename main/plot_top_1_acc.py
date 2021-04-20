@@ -50,7 +50,7 @@ ax.set_yticks(y_pos)
 ax.set_yticklabels(ordered_labels)
 ax.invert_yaxis()  # labels read top-to-bottom
 ax.set_xlabel('Accuracy (%)')
-ax.set_title('Imagenet 2012 Dataset Top 1 Accuracy')
+ax.set_title('Imagenet 2012 Dataset Top 1 Accuracy (50000 samples)')
 
 ax.set_xlim(right=100)  # adjust xlim to fit labels
 
