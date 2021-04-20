@@ -19,15 +19,15 @@ import time
 from PIL import Image
 from torchvision import transforms
 
-img_src_path = '../src/imagenet2012_obj/' # ILSVRC2012 path
-# img_src_path = '../src/extra_samples/' # personal samples path
+# img_src_path = '../src/imagenet2012_obj/' # ILSVRC2012 path
+img_src_path = '../src/extra_samples/' # personal samples path
 labels_path = '../src/labels/imagenet_classes.txt'
-ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt' # ILSVRC2012 ground truth path
-# ground_truth_path = '../src/groundtruth/extra_samples_val.txt' # personal samples ground truth path
+# ground_truth_path = '../src/groundtruth/ILSVRC2012_val.txt' # ILSVRC2012 ground truth path
+ground_truth_path = '../src/groundtruth/extra_samples_val.txt' # personal samples ground truth path
 # imgname = '../src/imagenet2012_obj/ILSVRC2012_val_00000004.JPEG'
 image_src = os.listdir(img_src_path)
 image_src.sort()
-data_set_size = 50000
+data_set_size = 100
 
 # Mount ground truth file
 ground_truth = {}
@@ -116,6 +116,7 @@ def model_prediction(model, preprocess):
 # Load MobileNetV2
 model_1 = torch.hub.load('pytorch/vision:v0.9.0', 'mobilenet_v2', pretrained=True)
 model_1.eval()
+model_1_params = sum(p.numel() for p in model_1.parameters())
 
 model_1_top_1, model_1_top_5 = model_prediction(model_1, preprocess)
 model_1_top_1_acc = model_1_top_1*100
@@ -126,12 +127,14 @@ print("MobileNetV2 top 1 accuracy: {}".format(model_1_top_1_acc))
 print("MobileNetV2 top 5 accuracy: {}".format(model_1_top_5_acc))
 print("MobileNetV2 top 1 error: {}".format(model_1_top_1_err))
 print("MobileNetV2 top 5 error: {}".format(model_1_top_5_err))
+print("MobileNetV2 total params: {}".format(model_1_params))
 
 # Predict ResNet50
 # if sys.argv[1] == 'model_2':
 # Load ResNet50
 model_2 = torch.hub.load('pytorch/vision:v0.9.0', 'resnet152', pretrained=True)
 model_2.eval()
+model_2_params = sum(p.numel() for p in model_2.parameters())
 
 model_2_top_1, model_2_top_5 = model_prediction(model_2, preprocess)
 model_2_top_1_acc = model_2_top_1*100
@@ -142,12 +145,14 @@ print("ResNet152 top 1 accuracy: {}".format(model_2_top_1_acc))
 print("ResNet152 top 5 accuracy: {}".format(model_2_top_5_acc))
 print("ResNet152 top 1 error: {}".format(model_2_top_1_err))
 print("ResNet152 top 5 error: {}".format(model_2_top_5_err))
+print("ResNet152 total params: {}".format(model_2_params))
 
 # Predict SqueezeNet1.0
 # if sys.argv[1] == 'model_3':
 # Load SqueezeNet1.0
 model_3 = torch.hub.load('pytorch/vision:v0.9.0', 'squeezenet1_0', pretrained=True)
 model_3.eval()
+model_3_params = sum(p.numel() for p in model_3.parameters())
 
 model_3_top_1, model_3_top_5 = model_prediction(model_3, preprocess)
 model_3_top_1_acc = model_3_top_1*100
@@ -158,12 +163,14 @@ print("SqueezeNet1.0 top 1 accuracy: {}".format(model_3_top_1_acc))
 print("SqueezeNet1.0 top 5 accuracy: {}".format(model_3_top_5_acc))
 print("SqueezeNet1.0 top 1 error: {}".format(model_3_top_1_err))
 print("SqueezeNet1.0 top 5 error: {}".format(model_3_top_5_err))
+print("SqueezeNet1.0 total params: {}".format(model_3_params))
 
 # Predict VGG16
 # if sys.argv[1] == 'model_4':
 # Load VGG16
 model_4 = torch.hub.load('pytorch/vision:v0.9.0', 'vgg19', pretrained=True)
 model_4.eval()
+model_4_params = sum(p.numel() for p in model_4.parameters())
 
 model_4_top_1, model_4_top_5 = model_prediction(model_4, preprocess)
 model_4_top_1_acc = model_4_top_1*100
@@ -174,12 +181,14 @@ print("VGG19 top 1 accuracy: {}".format(model_4_top_1_acc))
 print("VGG19 top 5 accuracy: {}".format(model_4_top_5_acc))
 print("VGG19 top 1 error: {}".format(model_4_top_1_err))
 print("VGG19 top 5 error: {}".format(model_4_top_5_err))
+print("VGG19 total params: {}".format(model_4_params))
 
 # Predict Alexnet
 # if sys.argv[1] == 'model_5':
 # Load Alexnet
 model_5 = torch.hub.load('pytorch/vision:v0.9.0', 'alexnet', pretrained=True)
 model_5.eval()
+model_5_params = sum(p.numel() for p in model_5.parameters())
 
 model_5_top_1, model_5_top_5 = model_prediction(model_5, preprocess)
 model_5_top_1_acc = model_5_top_1*100
@@ -190,12 +199,14 @@ print("Alexnet top 1 accuracy: {}".format(model_5_top_1_acc))
 print("Alexnet top 5 accuracy: {}".format(model_5_top_5_acc))
 print("Alexnet top 1 error: {}".format(model_5_top_1_err))
 print("Alexnet top 5 error: {}".format(model_5_top_5_err))
+print("Alexnet total params: {}".format(model_5_params))
 
 # Predict GoogLeNet
 # if sys.argv[1] == 'model_6':
 # Load GoogLeNet
 model_6 = torch.hub.load('pytorch/vision:v0.9.0', 'googlenet', pretrained=True)
 model_6.eval()
+model_6_params = sum(p.numel() for p in model_6.parameters())
 
 model_6_top_1, model_6_top_5 = model_prediction(model_6, preprocess)
 model_6_top_1_acc = model_6_top_1*100
@@ -206,12 +217,14 @@ print("GoogLeNet top 1 accuracy: {}".format(model_6_top_1_acc))
 print("GoogLeNet top 5 accuracy: {}".format(model_6_top_5_acc))
 print("GoogLeNet top 1 error: {}".format(model_6_top_1_err))
 print("GoogLeNet top 5 error: {}".format(model_6_top_5_err))
+print("GoogLeNet total params: {}".format(model_6_params))
 
 # Predict DenseNet121
 # if sys.argv[1] == 'model_7':
 # Load DenseNet121
 model_7 = torch.hub.load('pytorch/vision:v0.9.0', 'densenet201', pretrained=True)
 model_7.eval()
+model_7_params = sum(p.numel() for p in model_7.parameters())
 
 model_7_top_1, model_7_top_5 = model_prediction(model_7, preprocess)
 model_7_top_1_acc = model_7_top_1*100
@@ -222,12 +235,14 @@ print("DenseNet201 top 1 accuracy: {}".format(model_7_top_1_acc))
 print("DenseNet201 top 5 accuracy: {}".format(model_7_top_5_acc))
 print("DenseNet201 top 1 error: {}".format(model_7_top_1_err))
 print("DenseNet201 top 5 error: {}".format(model_7_top_5_err))
+print("DenseNet201 total params: {}".format(model_7_params))
 
 # Predict InceptionV3
 # if sys.argv[1] == 'model_8':
 # Load InceptionV3
 model_8 = torch.hub.load('pytorch/vision:v0.9.0', 'inception_v3', pretrained=True)
 model_8.eval()
+model_8_params = sum(p.numel() for p in model_8.parameters())
 
 model_8_top_1, model_8_top_5 = model_prediction(model_8, preprocess_inception)
 model_8_top_1_acc = model_8_top_1*100
@@ -238,12 +253,14 @@ print("InceptionV3 top 1 accuracy: {}".format(model_8_top_1_acc))
 print("InceptionV3 top 5 accuracy: {}".format(model_8_top_5_acc))
 print("InceptionV3 top 1 error: {}".format(model_8_top_1_err))
 print("InceptionV3 top 5 error: {}".format(model_8_top_5_err))
+print("InceptionV3 total params: {}".format(model_8_params))
 
 # Predict Shufflenet
 # if sys.argv[1] == 'model_9':
 # Load Shufflenet
 model_9 = torch.hub.load('pytorch/vision:v0.9.0', 'shufflenet_v2_x1_0', pretrained=True)
 model_9.eval()
+model_9_params = sum(p.numel() for p in model_9.parameters())
 
 model_9_top_1, model_9_top_5 = model_prediction(model_9, preprocess)
 model_9_top_1_acc = model_9_top_1*100
@@ -254,19 +271,22 @@ print("Shufflenet top 1 accuracy: {}".format(model_9_top_1_acc))
 print("Shufflenet top 5 accuracy: {}".format(model_9_top_5_acc))
 print("Shufflenet top 1 error: {}".format(model_9_top_1_err))
 print("Shufflenet top 5 error: {}".format(model_9_top_5_err))
+print("Shufflenet total params: {}".format(model_9_params))
 
-# Predict MNASnet
+# Predict MNASNet
 # if sys.argv[1] == 'model_10':
-# Load MNASnet
+# Load MNASNet
 model_10 = torch.hub.load('pytorch/vision:v0.9.0', 'mnasnet1_0', pretrained=True)
 model_10.eval()
+model_10_params = sum(p.numel() for p in model_10.parameters())
 
 model_10_top_1, model_10_top_5 = model_prediction(model_10, preprocess)
 model_10_top_1_acc = model_10_top_1*100
 model_10_top_5_acc = model_10_top_5*100
 model_10_top_1_err = 100 - model_10_top_1_acc
 model_10_top_5_err = 100 - model_10_top_5_acc
-print("MNASnet top 1 accuracy: {}".format(model_10_top_1_acc))
-print("MNASnet top 5 accuracy: {}".format(model_10_top_5_acc))
-print("MNASnet top 1 error: {}".format(model_10_top_1_err))
-print("MNASnet top 5 error: {}".format(model_10_top_5_err))
+print("MNASNet top 1 accuracy: {}".format(model_10_top_1_acc))
+print("MNASNet top 5 accuracy: {}".format(model_10_top_5_acc))
+print("MNASNet top 1 error: {}".format(model_10_top_1_err))
+print("MNASNet top 5 error: {}".format(model_10_top_5_err))
+print("MNASNet total params: {}".format(model_10_params))
