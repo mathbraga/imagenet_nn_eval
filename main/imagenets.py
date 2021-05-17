@@ -132,7 +132,7 @@ print("MobileNetV2 total params: {}".format(model_1_params))
 # Predict ResNet50
 # if sys.argv[1] == 'model_2':
 # Load ResNet50
-model_2 = torch.hub.load('pytorch/vision:v0.9.0', 'resnet152', pretrained=True)
+model_2 = torch.hub.load('pytorch/vision:v0.9.0', 'resnet50', pretrained=True)
 model_2.eval()
 model_2_params = sum(p.numel() for p in model_2.parameters())
 
@@ -168,7 +168,7 @@ print("SqueezeNet1.0 total params: {}".format(model_3_params))
 # Predict VGG16
 # if sys.argv[1] == 'model_4':
 # Load VGG16
-model_4 = torch.hub.load('pytorch/vision:v0.9.0', 'vgg19', pretrained=True)
+model_4 = torch.hub.load('pytorch/vision:v0.9.0', 'vgg16', pretrained=True)
 model_4.eval()
 model_4_params = sum(p.numel() for p in model_4.parameters())
 
@@ -222,7 +222,7 @@ print("GoogLeNet total params: {}".format(model_6_params))
 # Predict DenseNet121
 # if sys.argv[1] == 'model_7':
 # Load DenseNet121
-model_7 = torch.hub.load('pytorch/vision:v0.9.0', 'densenet201', pretrained=True)
+model_7 = torch.hub.load('pytorch/vision:v0.9.0', 'densenet121', pretrained=True)
 model_7.eval()
 model_7_params = sum(p.numel() for p in model_7.parameters())
 
