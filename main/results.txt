@@ -1,0 +1,80 @@
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:   13.47207 s
+Average time per image:    0.13472 s
+MobileNetV2 top 1 accuracy: 86.0
+MobileNetV2 top 5 accuracy: 96.0
+MobileNetV2 top 1 error: 14.0
+MobileNetV2 top 5 error: 4.0
+MobileNetV2 total params: 3504872
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:    8.61909 s
+Average time per image:    0.08619 s
+ResNet152 top 1 accuracy: 84.0
+ResNet152 top 5 accuracy: 96.0
+ResNet152 top 1 error: 16.0
+ResNet152 top 5 error: 4.0
+ResNet152 total params: 25557032
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:    2.79201 s
+Average time per image:    0.02792 s
+SqueezeNet1.0 top 1 accuracy: 83.0
+SqueezeNet1.0 top 5 accuracy: 95.0
+SqueezeNet1.0 top 1 error: 17.0
+SqueezeNet1.0 top 5 error: 5.0
+SqueezeNet1.0 total params: 1248424
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:   15.92365 s
+Average time per image:    0.15924 s
+VGG19 top 1 accuracy: 86.0
+VGG19 top 5 accuracy: 97.0
+VGG19 top 1 error: 14.0
+VGG19 top 5 error: 3.0
+VGG19 total params: 138357544
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:    1.79291 s
+Average time per image:    0.01793 s
+Alexnet top 1 accuracy: 72.0
+Alexnet top 5 accuracy: 90.0
+Alexnet top 1 error: 28.0
+Alexnet top 5 error: 10.0
+Alexnet total params: 61100840
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:    5.99193 s
+Average time per image:    0.05992 s
+GoogLeNet top 1 accuracy: 82.0
+GoogLeNet top 5 accuracy: 94.0
+GoogLeNet top 1 error: 18.0
+GoogLeNet top 5 error: 6.0
+GoogLeNet total params: 6624904
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:    7.52068 s
+Average time per image:    0.07521 s
+DenseNet201 top 1 accuracy: 83.0
+DenseNet201 top 5 accuracy: 97.0
+DenseNet201 top 1 error: 17.0
+DenseNet201 top 5 error: 3.0
+DenseNet201 total params: 7978856
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:   10.76842 s
+Average time per image:    0.10768 s
+InceptionV3 top 1 accuracy: 90.0
+InceptionV3 top 5 accuracy: 98.0
+InceptionV3 top 1 error: 10.0
+InceptionV3 top 5 error: 2.0
+InceptionV3 total params: 27161264
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:    1.45406 s
+Average time per image:    0.01454 s
+Shufflenet top 1 accuracy: 87.0
+Shufflenet top 5 accuracy: 96.0
+Shufflenet top 1 error: 13.0
+Shufflenet top 5 error: 4.0
+Shufflenet total params: 2278604
+Using cache found in /home/matheusoliveira/.cache/torch/hub/pytorch_vision_v0.9.0
+Total time:   15.46078 s
+Average time per image:    0.15461 s
+MNASNet top 1 accuracy: 86.0
+MNASNet top 5 accuracy: 97.0
+MNASNet top 1 error: 14.0
+MNASNet top 5 error: 3.0
+MNASNet total params: 4383312
