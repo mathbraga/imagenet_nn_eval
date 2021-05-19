@@ -7,7 +7,6 @@
 # DenseNet201 = model_7
 # InceptionV3 = model_8
 # Shufflenet = model_9
-# MNASnet = model_10
 
 import torch
 # import tensorflow as tf
@@ -272,21 +271,3 @@ print("Shufflenet top 5 accuracy: {}".format(model_9_top_5_acc))
 print("Shufflenet top 1 error: {}".format(model_9_top_1_err))
 print("Shufflenet top 5 error: {}".format(model_9_top_5_err))
 print("Shufflenet total params: {}".format(model_9_params))
-
-# Predict MNASNet
-# if sys.argv[1] == 'model_10':
-# Load MNASNet
-model_10 = torch.hub.load('pytorch/vision:v0.9.0', 'mnasnet1_0', pretrained=True)
-model_10.eval()
-model_10_params = sum(p.numel() for p in model_10.parameters())
-
-model_10_top_1, model_10_top_5 = model_prediction(model_10, preprocess)
-model_10_top_1_acc = model_10_top_1*100
-model_10_top_5_acc = model_10_top_5*100
-model_10_top_1_err = 100 - model_10_top_1_acc
-model_10_top_5_err = 100 - model_10_top_5_acc
-print("MNASNet top 1 accuracy: {}".format(model_10_top_1_acc))
-print("MNASNet top 5 accuracy: {}".format(model_10_top_5_acc))
-print("MNASNet top 1 error: {}".format(model_10_top_1_err))
-print("MNASNet top 5 error: {}".format(model_10_top_5_err))
-print("MNASNet total params: {}".format(model_10_params))
